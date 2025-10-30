@@ -2,10 +2,10 @@ import express from "express";
 import { verifyToken } from "../middlewares/AuthMiddleware.js";
 import Auth from "../models/AuthModel.js";
 
-const UserRouter = express.Router();
+const UserProtectedRouter = express.Router();
 
 // 🧩 Protected Route
-UserRouter.get("/profile", verifyToken, async (req, res) => {
+UserProtectedRouter.get("/profile", verifyToken, async (req, res) => {
   try {
     const user = await Auth.findById(req.user.id).select("-password"); // hide password
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -17,4 +17,4 @@ UserRouter.get("/profile", verifyToken, async (req, res) => {
   }
 });
 
-export default UserRouter;
+export default UserProtectedRouter;

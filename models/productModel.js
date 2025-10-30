@@ -20,7 +20,8 @@ const productSchema = new mongoose.Schema(
         Image: {
             url: { type: String, required: true }, // Cloudinary URL
             public_id: { type: String, required: true }, // Cloudinary public_id
-    },
+        },
+
 
     },
     { timestamp: true}

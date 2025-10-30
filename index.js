@@ -7,8 +7,9 @@ import { errorHandler } from "./middlewares/errorMiddleware.js"
 import MessageRouter from "./routers/MessageRouter.js"
 import AuthRouter from "./routers/AuthRouter.js"
 import cookieParser from "cookie-parser";
-import UserRouter from "./routers/UserRouter.js"
+import UserProtectedRouter from "./routers/UserProtectedRouter.js"
 import productRouter from "./routers/productsRouter.js"
+import cartRoutes from './routers/cartRouter.js';
 
 
 
@@ -20,18 +21,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
+  origin: 'http://localhost:5173',
+  credentials: true,
 }));
 app.use(errorHandler);
 
 app.use("/api/auth", AuthRouter);
 app.use("/api/message", MessageRouter);
-app.use("/api", UserRouter);
+app.use("/api", UserProtectedRouter);
 app.get("/profile", (req, res) => {
   res.send("Server is running...");
 });
 app.use("/api/products", productRouter);
+app.use('/api/cart', cartRoutes);
 
 connectDB();
 const PORT = process.env.PORT || 5000
